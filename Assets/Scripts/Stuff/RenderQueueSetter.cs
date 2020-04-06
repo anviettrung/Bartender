@@ -15,4 +15,13 @@ public class RenderQueueSetter : MonoBehaviour
 			rendr.material.renderQueue = expectedRenderQueue; // set their renderQueue
 		}
 	}
+
+  	public static void Set(GameObject o, int rendQueue)
+	{
+		// get all renderers in this object and its children:
+		Renderer[] renders = o.GetComponentsInChildren<Renderer>();
+		foreach (Renderer rendr in renders) {
+			rendr.material.renderQueue = rendQueue; // set their renderQueue
+		}
+	}
 }
