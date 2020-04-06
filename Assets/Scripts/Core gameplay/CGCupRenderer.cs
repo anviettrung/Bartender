@@ -11,6 +11,10 @@ public class CGCupRenderer : MonoBehaviour
 	public float liquidLowestFA;
 	public float liquidHighestFA;
 
+	public GameObject dropReceiverBox;
+	public float dropReceiverBoxLowest;
+	public float dropReceiverBoxHighest;
+
 	public void Start()
 	{
 		RenderLiquidFill();
@@ -35,14 +39,21 @@ public class CGCupRenderer : MonoBehaviour
 			lqMat.SetColor("_RimColor", lqData.rimColor);
 
 			curFillAmount += soLiquidFill.fragments[i].fillAmount;
-			float fillHigh = (float)curFillAmount / (float)soLiquidFill.maxFillAmount;
-			fillHigh = Mathf.Lerp(liquidLowestFA, liquidHighestFA, fillHigh);
+			float fillPercentage = (float)curFillAmount / (float)soLiquidFill.maxFillAmount;
+			float fillHigh = Mathf.Lerp(liquidLowestFA, liquidHighestFA, fillPercentage);
 			lqMat.SetFloat("_FillAmount", fillHigh);
+
+			dropReceiverBox.transform.position = new Vector3(
+				dropReceiverBox.transform.position.x,
+				Mathf.Lerp(dropReceiverBoxLowest, dropReceiverBoxHighest, fillPercentage),
+				dropReceiverBox.transform.position.z
+			);
 
 			RenderQueueSetter.Set(lqClone, renderQueueMax - i);
 
 			lqClone.SetActive(true);
 
 		}
+
 	}
 }
