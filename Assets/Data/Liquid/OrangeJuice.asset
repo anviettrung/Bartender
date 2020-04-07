@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 224f593b6ea3b4f11bb181a1c2af368d, type: 3}
   m_Name: OrangeJuice
   m_EditorClassIdentifier: 
-  mainColor: {r: 0.99215686, g: 0.60784316, b: 0.45882353, a: 1}
+  mainColor: {r: 0.99215686, g: 0.60784316, b: 0.45882353, a: 0.5019608}
   topColor: {r: 1, g: 0.8509804, b: 0.6156863, a: 1}
   rimColor: {r: 0.49019608, g: 0.27058825, b: 0.2, a: 1}
   mainTexture: {fileID: 0}

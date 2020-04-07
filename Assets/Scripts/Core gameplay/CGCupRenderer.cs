@@ -5,6 +5,7 @@ using UnityEngine;
 public class CGCupRenderer : MonoBehaviour
 {
 	public SOLiquidFill soLiquidFill;
+	public bool realtimeUpdate;
 
 	[Header("Temp")]
 	public GameObject liquidModel;
@@ -15,33 +16,41 @@ public class CGCupRenderer : MonoBehaviour
 	public float dropReceiverBoxLowest;
 	public float dropReceiverBoxHighest;
 
+	protected List<CGLiquid> liquidFragments;
+
 	public void Start()
 	{
-		RenderLiquidFill();
+		InitRenderLiquidFill(soLiquidFill);
 	}
 
-	public void RenderLiquidFill()
+	protected void ClearFragments()
 	{
-		int renderQueueMax = 2000 + soLiquidFill.fragmentCap;
+		if (liquidFragments != null)
+			for (int i = 0; i < liquidFragments.Count; i++)
+				Destroy(liquidFragments[i].gameObject);
+	}
 
+	public void InitRenderLiquidFill(SOLiquidFill data)
+	{
+		ClearFragments();
+		liquidFragments = new List<CGLiquid>();
+
+		int renderQueueMax = 2000 + data.fragmentCap;
 		int curFillAmount = 0;
-		Color lastFragmentTopColor = soLiquidFill.fragments[soLiquidFill.fragments.Count-1].soLiquid.topColor;
-		for (int i = 0; i < soLiquidFill.fragments.Count; i++) {
+		Color lastFragmentTopColor = data.fragments[data.fragments.Count-1].soLiquid.topColor;
+		for (int i = 0; i < data.fragments.Count; i++) {
 
-			GameObject lqClone = Instantiate(liquidModel);
+			CGLiquid lqClone = Instantiate(liquidModel).GetComponent<CGLiquid>();
 			lqClone.transform.SetParent(transform);
 
-			Material lqMat = lqClone.GetComponent<Renderer>().material;
-			SOLiquid lqData = soLiquidFill.fragments[i].soLiquid;
+			lqClone.Init(data.fragments[i].soLiquid);
+			lqClone.TopColor = lastFragmentTopColor;
+			lqClone.FillAmountInt = data.fragments[i].fillAmount;
 
-			lqMat.SetColor("_Tint", lqData.mainColor);
-			lqMat.SetColor("_TopColor", lastFragmentTopColor);
-			lqMat.SetColor("_RimColor", lqData.rimColor);
-
-			curFillAmount += soLiquidFill.fragments[i].fillAmount;
-			float fillPercentage = (float)curFillAmount / (float)soLiquidFill.maxFillAmount;
+			curFillAmount += data.fragments[i].fillAmount;
+			float fillPercentage = (float)curFillAmount / (float)data.maxFillAmount;
 			float fillHigh = Mathf.Lerp(liquidLowestFA, liquidHighestFA, fillPercentage);
-			lqMat.SetFloat("_FillAmount", fillHigh);
+			lqClone.FillAmountFloat = fillHigh;
 
 			dropReceiverBox.transform.position = new Vector3(
 				dropReceiverBox.transform.position.x,
@@ -49,11 +58,12 @@ public class CGCupRenderer : MonoBehaviour
 				dropReceiverBox.transform.position.z
 			);
 
-			RenderQueueSetter.Set(lqClone, renderQueueMax - i);
+			RenderQueueSetter.Set(lqClone.gameObject, renderQueueMax - i);
 
-			lqClone.SetActive(true);
+			liquidFragments.Add(lqClone);
+
+			lqClone.gameObject.SetActive(true);
 
 		}
-
 	}
 }
