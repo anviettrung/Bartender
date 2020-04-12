@@ -8,19 +8,37 @@ public class CGCupRenderer : MonoBehaviour
 	public bool realtimeUpdate;
 
 	[Header("Temp")]
+	public DropReceiver dropReceiverBox;
+	public int incAmountPerDrop;
+
 	public GameObject liquidModel;
 	public float liquidLowestFA;
 	public float liquidHighestFA;
 
-	public GameObject dropReceiverBox;
 	public float dropReceiverBoxLowest;
 	public float dropReceiverBoxHighest;
 
 	protected List<CGLiquid> liquidFragments;
 
+	protected int curFillAmount = 0;
+
 	public void Start()
 	{
+		dropReceiverBox.onDropEnter.AddListener(() => {
+			CGLiquid lastLiquid = liquidFragments[liquidFragments.Count - 1];
+			lastLiquid.FillAmountInt += incAmountPerDrop;
+
+			curFillAmount += incAmountPerDrop;
+			float fillPercentage = (float)curFillAmount / (float)soLiquidFill.maxFillAmount;
+			float fillHigh = Mathf.Lerp(liquidLowestFA, liquidHighestFA, fillPercentage);
+			lastLiquid.FillAmountFloat = fillHigh;
+		});
 		InitRenderLiquidFill(soLiquidFill);
+	}
+
+	private void Update()
+	{
+
 	}
 
 	protected void ClearFragments()
@@ -36,7 +54,7 @@ public class CGCupRenderer : MonoBehaviour
 		liquidFragments = new List<CGLiquid>();
 
 		int renderQueueMax = 2000 + data.fragmentCap;
-		int curFillAmount = 0;
+		curFillAmount = 0;
 		Color lastFragmentTopColor = data.fragments[data.fragments.Count-1].soLiquid.topColor;
 		for (int i = 0; i < data.fragments.Count; i++) {
 
