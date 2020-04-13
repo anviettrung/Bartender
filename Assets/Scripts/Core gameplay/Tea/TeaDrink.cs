@@ -15,6 +15,7 @@ public class TeaDrink : MonoBehaviour
 	[Header("Test")]
 	public SOLiquid soLiquidToSpawn;
 	public int incAmountPerDrop;
+	public SOFillRequirement requirement;
 
 	[Header("Working variable")]
 	public int currentAmount = 0;
@@ -46,7 +47,11 @@ public class TeaDrink : MonoBehaviour
 	public void Start()
 	{
 		dropReceiverBox.onDropEnter.AddListener(OnDropEnterLiquid);
-		//onFillChange.AddListener();
+		onFillChange.AddListener((TeaDrink drink) => {
+			if (IsFillFull()) {
+				GetMatchPercentageOfRequirement();
+			}
+		});
 	}
 
 	public void Update()
@@ -69,6 +74,29 @@ public class TeaDrink : MonoBehaviour
 		return currentAmount >= maxAmount;
 	}
 
+	public float GetMatchPercentageOfRequirement()
+	{
+		float matchPercentage = 1;
+		for (int i = 0; i < requirement.components.Count; i++) {
+			float fillPercent = 0;
+
+			for (int j = 0; j < liquidFragment.Count; j++) {
+				if (BM.Utility.CompareColor(liquidFragment[j].MainColor, requirement.components[i].soLiquid.mainColor)) {
+					fillPercent = (float)liquidFragment[j].FillAmountInt / maxAmount;
+					break;
+				}
+			}
+
+			if (fillPercent < requirement.GetComponentPercentage(i))
+				matchPercentage *= fillPercent / requirement.GetComponentPercentage(i);
+			else
+				matchPercentage *= requirement.GetComponentPercentage(i) / fillPercent;
+		}
+
+		Debug.Log(matchPercentage);
+		return matchPercentage;
+	}
+
 	#endregion
 
 	#region Liquid Handler
@@ -79,6 +107,7 @@ public class TeaDrink : MonoBehaviour
 		clone.Init(dataModel);
 		clone.SetDrink(this);
 		clone.FillAmountFloat = AmountI2F(currentAmount);
+		clone.FillAmountInt = 0;
 
 		RenderQueueSetter.Set(clone.gameObject, renderQueueMax - liquidFragment.Count);
 		liquidFragment.Add(clone);
@@ -94,10 +123,12 @@ public class TeaDrink : MonoBehaviour
 
 	public void IncreaseLiquidAmount(int amount)
 	{
-		currentAmount += amount;
+		int delta = Mathf.Clamp(currentAmount + amount, 0, maxAmount) - currentAmount;
+		lastLiquidFragment.FillAmountInt += delta;
+		currentAmount = delta + currentAmount;
 		lastLiquidFragment.FillAmountFloat = AmountI2F(currentAmount);
 
-		if (amount > 0) {
+		if (delta > 0) {
 			Color lastLiquidTopColor = lastLiquidFragment.TopColor;
 			for (int i = 0; i < liquidFragment.Count - 1; i++)
 				liquidFragment[i].TopColor = lastLiquidTopColor;
