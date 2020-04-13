@@ -18,7 +18,7 @@ public class CGController : MonoBehaviour
 
 	private void Start()
 	{
-		currentDrink = Instantiate(drinkModel).GetComponent<CGCupRenderer>();
+		//currentDrink = Instantiate(drinkModel).GetComponent<CGCupRenderer>();
 	}
 
 	private void Update()

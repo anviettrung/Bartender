@@ -28,6 +28,6 @@ Material:
     - _Stroke: 0
     - _Stroke2: 0.1
     m_Colors:
-    - _Color: {r: 1, g: 0.73333335, b: 0.6156863, a: 1}
+    - _Color: {r: 0.9960785, g: 0.8509804, b: 0.9607843, a: 1}
     - _StrokeColor: {r: 1, g: 1, b: 1, a: 1}
     - _StrokeColor2: {r: 1, g: 1, b: 1, a: 1}

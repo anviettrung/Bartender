@@ -36,10 +36,12 @@ public class CGLiquid : MonoBehaviour
 			rend.material.SetFloat("_FillAmount", value);
 		}
 	}
-	public int FillAmountInt;
-	//public Texture2D mainTexture;
-	public Renderer rend;
 
+	public int FillAmountInt;
+
+	public TeaDrink drink;
+
+	public Renderer rend;
 
 	public void Init(SOLiquid data)
 	{
@@ -48,29 +50,44 @@ public class CGLiquid : MonoBehaviour
 		RimColor = data.rimColor;
 	}
 
-	#region Realtime update
-#if UNITY_EDITOR
-	[Header("Realtime test")]
-	public bool realtimeUpdate;
-	public Color mainColor;
-	public Color topColor;
-	public Color rimColor;
-	public float fillAmount;
-
-	protected void Update()
+	public void SetDrink(TeaDrink d)
 	{
-		if (realtimeUpdate) {
-			MainColor = mainColor;
-			TopColor = topColor;
-			RimColor = rimColor;
-			FillAmountFloat = fillAmount;
-		} else {
-			mainColor = MainColor;
-			topColor = TopColor;
-			rimColor = RimColor;
-			fillAmount = FillAmountFloat;
-		}
+		drink = d;
 	}
-#endif
-	#endregion
+
+	/// <summary>
+	/// Compares liquid and liquid
+	/// </summary>
+	public static bool CompareL2L(CGLiquid a, CGLiquid b)
+	{
+		return BM.Utility.CompareColor(a.MainColor, b.MainColor);
+	}
+
+	//public static bool Compare
+
+//	#region Realtime update
+//#if UNITY_EDITOR
+//	[Header("Realtime test")]
+//	public bool realtimeUpdate;
+//	public Color mainColor;
+//	public Color topColor;
+//	public Color rimColor;
+//	public float fillAmount;
+
+//	protected void Update()
+//	{
+//		if (realtimeUpdate) {
+//			MainColor = mainColor;
+//			TopColor = topColor;
+//			RimColor = rimColor;
+//			FillAmountFloat = fillAmount;
+//		} else {
+//			mainColor = MainColor;
+//			topColor = TopColor;
+//			rimColor = RimColor;
+//			fillAmount = FillAmountFloat;
+//		}
+//	}
+//#endif
+	//#endregion
 }
