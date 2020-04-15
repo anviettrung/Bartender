@@ -63,31 +63,42 @@ public class CGLiquid : MonoBehaviour
 		return BM.Utility.CompareColor(a.MainColor, b.MainColor);
 	}
 
-	//public static bool Compare
+	public void LerpToLiquid(CGLiquid target, float t)
+	{
+		StartCoroutine(BM.Utility.LerpColorOverTime(MainColor, target.MainColor, t, (res) => {
+			MainColor = res;
+		}));
+		StartCoroutine(BM.Utility.LerpColorOverTime(TopColor, target.TopColor, t, (res) => {
+			TopColor = res;
+		}));
+		StartCoroutine(BM.Utility.LerpColorOverTime(RimColor, target.RimColor, t, (res) => {
+			RimColor = res;
+		}));
+	}
 
-//	#region Realtime update
-//#if UNITY_EDITOR
-//	[Header("Realtime test")]
-//	public bool realtimeUpdate;
-//	public Color mainColor;
-//	public Color topColor;
-//	public Color rimColor;
-//	public float fillAmount;
+	//	#region Realtime update
+	//#if UNITY_EDITOR
+	//	[Header("Realtime test")]
+	//	public bool realtimeUpdate;
+	//	public Color mainColor;
+	//	public Color topColor;
+	//	public Color rimColor;
+	//	public float fillAmount;
 
-//	protected void Update()
-//	{
-//		if (realtimeUpdate) {
-//			MainColor = mainColor;
-//			TopColor = topColor;
-//			RimColor = rimColor;
-//			FillAmountFloat = fillAmount;
-//		} else {
-//			mainColor = MainColor;
-//			topColor = TopColor;
-//			rimColor = RimColor;
-//			fillAmount = FillAmountFloat;
-//		}
-//	}
-//#endif
+	//	protected void Update()
+	//	{
+	//		if (realtimeUpdate) {
+	//			MainColor = mainColor;
+	//			TopColor = topColor;
+	//			RimColor = rimColor;
+	//			FillAmountFloat = fillAmount;
+	//		} else {
+	//			mainColor = MainColor;
+	//			topColor = TopColor;
+	//			rimColor = RimColor;
+	//			fillAmount = FillAmountFloat;
+	//		}
+	//	}
+	//#endif
 	//#endregion
 }

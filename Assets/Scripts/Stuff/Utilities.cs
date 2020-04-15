@@ -18,6 +18,29 @@ namespace BM // Stand for Bartender Master
 
 			return false;
 		}
+
+		public static Color Lerp(Color x, Color y, float w)
+		{
+			return new Color(
+				Mathf.Lerp(x.r, y.r, w),
+				Mathf.Lerp(x.g, y.g, w),
+				Mathf.Lerp(x.b, y.b, w),
+				Mathf.Lerp(x.a, y.a, w)
+			);
+		}
+
+		public static IEnumerator LerpColorOverTime(Color fromC, Color toC, float t, System.Action<Color> setter)
+		{
+			float elapsed = 0;
+			do {
+				float w = elapsed / t;
+
+				setter(Color.Lerp(fromC, toC, w));
+
+				yield return new WaitForEndOfFrame();
+				elapsed += Time.deltaTime;
+			} while (elapsed < t);
+		}
 	}
 
 	// Define Events

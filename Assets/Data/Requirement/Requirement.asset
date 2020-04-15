@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9d669e5e5924ae0b96e507f31895eb, type: 3}
   m_Name: Requirement
   m_EditorClassIdentifier: 
-  components: []
+  components:
+  - soLiquid: {fileID: 11400000, guid: 725c1e26e05c9404b9d673a81abf7013, type: 2}
+    amountRequire: 1
+  - soLiquid: {fileID: 11400000, guid: a3c8efea178a044b9bc461321ba41ee0, type: 2}
+    amountRequire: 1

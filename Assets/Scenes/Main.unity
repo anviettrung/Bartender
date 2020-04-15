@@ -1984,11 +1984,6 @@ MonoBehaviour:
   FillAmountInt: 0
   drink: {fileID: 0}
   rend: {fileID: 5292317705110687762}
-  realtimeUpdate: 0
-  mainColor: {r: 0, g: 0, b: 0, a: 0}
-  topColor: {r: 0, g: 0, b: 0, a: 0}
-  rimColor: {r: 0, g: 0, b: 0, a: 0}
-  fillAmount: 0
 --- !u!1001 &6564408163663598318
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2106,6 +2101,12 @@ PrefabInstance:
       propertyPath: soLiquidToSpawn
       value: 
       objectReference: {fileID: 11400000, guid: a3c8efea178a044b9bc461321ba41ee0,
+        type: 2}
+    - target: {fileID: 6564408162376466665, guid: e0d3f0e1b29244f53b0a06da40b2bbd7,
+        type: 3}
+      propertyPath: requirement
+      value: 
+      objectReference: {fileID: 11400000, guid: cd6c71000372d4b13a7d7e218f93271d,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0d3f0e1b29244f53b0a06da40b2bbd7, type: 3}
