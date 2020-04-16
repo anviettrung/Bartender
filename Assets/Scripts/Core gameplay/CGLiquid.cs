@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CGLiquid : MonoBehaviour
 {
+	public SOLiquid data;
+
 	public Color MainColor {
 		get {
 			return rend.material.GetColor("_Tint");
@@ -43,11 +45,13 @@ public class CGLiquid : MonoBehaviour
 
 	public Renderer rend;
 
-	public void Init(SOLiquid data)
+	public void Init(SOLiquid _data)
 	{
-		MainColor = data.mainColor;
-		TopColor = data.topColor;
-		RimColor = data.rimColor;
+		MainColor = _data.mainColor;
+		TopColor = _data.topColor;
+		RimColor = _data.rimColor;
+
+		data = _data;
 	}
 
 	public void SetDrink(TeaDrink d)

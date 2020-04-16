@@ -24,7 +24,7 @@ public class CGCupRenderer : MonoBehaviour
 
 	public void Start()
 	{
-		dropReceiverBox.onDropEnter.AddListener(() => {
+		dropReceiverBox.onDropEnter.AddListener((drop) => {
 			CGLiquid lastLiquid = liquidFragments[liquidFragments.Count - 1];
 			lastLiquid.FillAmountInt += incAmountPerDrop;
 

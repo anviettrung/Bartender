@@ -16,18 +16,14 @@ public class CGController : MonoBehaviour
 	public float cooldownTime;
 	public bool readyWater = true;
 
-	private void Start()
-	{
-		//currentDrink = Instantiate(drinkModel).GetComponent<CGCupRenderer>();
-	}
 
 	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.O)) {
-			waterFallMachineModel.Spawn("Food");
+//			waterFallMachineModel.Spawn("Food");
 		} else if (Input.GetKey(KeyCode.P) && readyWater) {
 			readyWater = false;
-			waterFallMachineModel.Spawn("Drop");
+			waterFallMachineModel.SpawnDrop();
 			Invoke("Release", cooldownTime);
 		}
 	}

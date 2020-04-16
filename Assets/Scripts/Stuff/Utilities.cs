@@ -45,4 +45,5 @@ namespace BM // Stand for Bartender Master
 
 	// Define Events
 	public class EventDrink : UnityEvent<TeaDrink> { }
+	public class EventDrop  : UnityEvent<LiquidDrop> { }
 }

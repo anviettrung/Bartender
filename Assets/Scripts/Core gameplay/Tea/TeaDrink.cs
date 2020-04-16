@@ -34,7 +34,7 @@ public class TeaDrink : MonoBehaviour
 	public List<CGLiquid> liquidFragment;
 	public CGLiquid lastLiquidFragment {
 		get {
-			return liquidFragment[liquidFragment.Count-1];
+			return (liquidFragment.Count > 0) ? liquidFragment[liquidFragment.Count-1] : null;
 		}
 	}
 
@@ -120,9 +120,16 @@ public class TeaDrink : MonoBehaviour
 		clone.gameObject.SetActive(true);
 	}
 
-	public void OnDropEnterLiquid()
+	public void OnDropEnterLiquid(LiquidDrop drop)
 	{
-		IncreaseLiquidAmount(incAmountPerDrop);
+		if (lastLiquidFragment == null || drop.data != lastLiquidFragment.data) {
+			CreateLiquidFragment(drop.data);
+			IncreaseLiquidAmount(incAmountPerDrop);
+		} else {
+			IncreaseLiquidAmount(incAmountPerDrop);
+		}
+
+		Destroy(drop.gameObject);
 	}
 
 	public void IncreaseLiquidAmount(int amount)
