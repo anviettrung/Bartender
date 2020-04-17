@@ -16,10 +16,12 @@ public class TeaDrink : MonoBehaviour
 	public SOLiquid soLiquidToSpawn;
 	public int incAmountPerDrop;
 	public SOFillRequirement requirement;
+	public int jellyUnitRequirement = 5;
+	public bool isShaking = false;
 
 	[Header("Working variable")]
 	public int currentAmount = 0;
-
+	public int currentJellyUnit = 0;
 
 	[Header("Cup setting")]
 	public CGLiquid liquidModel;
@@ -30,12 +32,25 @@ public class TeaDrink : MonoBehaviour
 	public float dropReceiverBoxLowest;
 	public float dropReceiverBoxHighest;
 
+	public GameObject cupLid;
+
 	[Header("Liquid")]
 	public List<CGLiquid> liquidFragment;
 	public CGLiquid lastLiquidFragment {
 		get {
 			return (liquidFragment.Count > 0) ? liquidFragment[liquidFragment.Count-1] : null;
 		}
+	}
+
+	[Header("Stage")]
+	public Stage curStage = Stage.Initialization;
+	public enum Stage
+	{
+		Initialization,
+		CuttingJelly,
+		FillUp,
+		Shake,
+		Complete
 	}
 
 	[Header("Events")]
@@ -48,7 +63,7 @@ public class TeaDrink : MonoBehaviour
 	{
 		dropReceiverBox.onDropEnter.AddListener(OnDropEnterLiquid);
 		onFillChange.AddListener((TeaDrink drink) => {
-			if (IsFillFull()) {
+			if (IsFullLiquid()) {
 				GetMatchPercentageOfRequirement();
 			}
 		});
@@ -56,13 +71,66 @@ public class TeaDrink : MonoBehaviour
 
 	public void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.G)) {
-			CreateLiquidFragment(soLiquidToSpawn);
-		} else if (Input.GetKeyDown(KeyCode.H)) {
-			IncreaseLiquidAmount(incAmountPerDrop);
-		} else if (Input.GetKeyDown(KeyCode.J)) {
-			for (int i = 0; i < liquidFragment.Count-1; i++)
-				liquidFragment[i].LerpToLiquid(lastLiquidFragment, 1);
+		//if (Input.GetKeyDown(KeyCode.G)) {
+		//	CreateLiquidFragment(soLiquidToSpawn);
+		//} else if (Input.GetKeyDown(KeyCode.H)) {
+		//	IncreaseLiquidAmount(incAmountPerDrop);
+		//} else if (Input.GetKeyDown(KeyCode.J)) {
+		//	for (int i = 0; i < liquidFragment.Count-1; i++)
+		//		liquidFragment[i].LerpToLiquid(lastLiquidFragment, 1);
+		//}
+
+		switch (curStage) {
+			case Stage.Initialization:
+				// add condition later;
+				curStage = Stage.CuttingJelly;
+				break;
+			case Stage.CuttingJelly:
+				if (IsFullJelly()) {
+					// disable stage
+					LevelManager.Instance.cuttingJellyMachine.gameObject.SetActive(false);
+					LevelManager.Instance.bigJelly.SetActive(false);
+
+					// enable next stage
+					LevelManager.Instance.waterFallMachine.gameObject.SetActive(true);
+					LevelManager.Instance.waterFallMachineController.enabled = true;
+					LevelManager.Instance.nextJuiceButton.SetActive(true);
+
+					curStage = Stage.FillUp;
+				}
+				break;
+			case Stage.FillUp:
+				if (IsFullLiquid()) {
+					LevelManager.Instance.waterFallMachine.gameObject.SetActive(false);
+					LevelManager.Instance.waterFallMachineController.enabled = false;
+					LevelManager.Instance.nextJuiceButton.SetActive(false);
+					LevelManager.Instance.bangChuyen.SetActive(false);
+
+					curStage = Stage.Shake;
+				}
+				break;
+			case Stage.Shake:
+				if (!isShaking) {
+					StartCoroutine(CoroutineUtils.Chain(
+						CoroutineUtils.Do(() => {
+							cupLid.gameObject.SetActive(true);
+							isShaking = true;
+						}),
+						CoroutineUtils.WaitForSeconds(1),
+						// Shake
+						Shake(10, 10, 2),
+						CoroutineUtils.Do(() => {
+							gameObject.transform.eulerAngles = Vector3.zero;
+
+							curStage = Stage.Complete;
+						})
+					));
+				}
+					
+				break;
+			case Stage.Complete:
+				LevelManager.Instance.completeUIText.SetActive(true);
+				break;
 		}
 
 	}
@@ -72,11 +140,21 @@ public class TeaDrink : MonoBehaviour
 
 	#endregion
 
-	#region Check Requirements
-	public bool IsFillFull()
+	#region Change Stage condition
+	public bool IsFullJelly()
+	{
+		return currentJellyUnit >= jellyUnitRequirement;
+	}
+
+	public bool IsFullLiquid()
 	{
 		return currentAmount >= maxAmount;
 	}
+
+	#endregion
+
+
+	#region Check Requirements
 
 	public float GetMatchPercentageOfRequirement()
 	{
@@ -162,11 +240,40 @@ public class TeaDrink : MonoBehaviour
 		return Mathf.Lerp(liquidLowestFA, liquidHighestFA, (float)amount / maxAmount);
 	}
 
+	public void LerpAllLiquid()
+	{
+		SOLiquid final = new SOLiquid();
+
+	}
+
 	#endregion
 
 	#region Food Decoration Handler
+	public void IncreaseJellyItem(GameObject obj)
+	{
+		if (obj.tag == "Jelly") {
+			currentJellyUnit++;
+		}
+	}
+
 	#endregion
 
 	#region Shake Handler
+	IEnumerator Shake(float amp, float speed, float time)
+	{
+		float elapsed = 0;
+		float startTime = Time.time;
+		do {
+			gameObject.transform.eulerAngles = new Vector3(
+				gameObject.transform.eulerAngles.x,
+				gameObject.transform.eulerAngles.y,
+				Mathf.Sin(speed * elapsed) * amp
+			);
+
+			yield return new WaitForEndOfFrame();
+			elapsed += Time.deltaTime;
+		} while (elapsed < time);
+	}
+
 	#endregion
 }

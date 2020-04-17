@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CGController : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class CGController : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.O)) {
 //			waterFallMachineModel.Spawn("Food");
-		} else if (Input.GetKey(KeyCode.P) && readyWater) {
+		} else if (Input.GetMouseButton(0) && readyWater && !IsPointerOverUIObject()) {
 			readyWater = false;
 			waterFallMachineModel.SpawnDrop();
 			Invoke("Release", cooldownTime);
@@ -31,5 +32,14 @@ public class CGController : MonoBehaviour
 	void Release()
 	{
 		readyWater = true;
+	}
+
+	private bool IsPointerOverUIObject()
+	{
+		PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+		eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+		List<RaycastResult> results = new List<RaycastResult>();
+		EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+		return results.Count > 0;
 	}
 }

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Drop
   - Sliceable
+  - Jelly
+  - JellyFragment
   layers:
   - Default
   - TransparentFX

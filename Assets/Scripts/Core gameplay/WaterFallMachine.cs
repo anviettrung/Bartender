@@ -11,7 +11,14 @@ public class WaterFallMachine : MonoBehaviour
 
 	public float dropSpawnDelta = 0.1f;
 
-	public SOLiquid curLiquidData;
+	public SOLiquid curLiquidData {
+		get {
+			return allLiquidTypes[curLiquidTypeID];
+		}
+	}
+
+	public List<SOLiquid> allLiquidTypes = new List<SOLiquid>();
+	public int curLiquidTypeID = 0;
 
 	public void SpawnDrop(SOLiquid lqData)
 	{
@@ -27,6 +34,11 @@ public class WaterFallMachine : MonoBehaviour
 	public void SpawnDrop()
 	{
 		SpawnDrop(curLiquidData);
+	}
+
+	public void NextLiquidType()
+	{
+		curLiquidTypeID = (curLiquidTypeID + 1) % allLiquidTypes.Count;
 	}
 
 	//public void Spawn(string modelTypeName)

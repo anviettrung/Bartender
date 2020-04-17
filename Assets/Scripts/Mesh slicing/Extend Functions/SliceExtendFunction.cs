@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class SliceExtendFunction : MonoBehaviour
 {
+	public string slicedFragmentTag = "Untagged";
+
+	public void RemoveSliceableTag(GameObject obj)
+	{
+		obj.tag = slicedFragmentTag; 
+	}
+
 	public void AddRigidbody(GameObject obj)
 	{
 		if (obj.GetComponent<Rigidbody>() == null)
