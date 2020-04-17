@@ -129,7 +129,7 @@ public class TeaDrink : MonoBehaviour
 			IncreaseLiquidAmount(incAmountPerDrop);
 		}
 
-		Destroy(drop.gameObject);
+		ObjectPool.Instance.PushBackToPool(drop.gameObject);
 	}
 
 	public void IncreaseLiquidAmount(int amount)

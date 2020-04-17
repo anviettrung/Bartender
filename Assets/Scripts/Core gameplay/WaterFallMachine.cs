@@ -15,12 +15,13 @@ public class WaterFallMachine : MonoBehaviour
 
 	public void SpawnDrop(SOLiquid lqData)
 	{
-		LiquidDrop clone1 = Instantiate(dropModel.gameObject).GetComponent<LiquidDrop>();
-		clone1.data = lqData;
+		LiquidDrop clone = ObjectPool.Instance.GetObject("drop").GetComponent<LiquidDrop>();
+		//LiquidDrop clone = Instantiate(dropModel.gameObject).GetComponent<LiquidDrop>();
+		clone.data = lqData;
 		dropTextureRend.material.SetColor("_Color", lqData.topColor);
-		clone1.transform.position = dropHolder.transform.position + Vector3.right * Random.Range(-dropSpawnDelta, dropSpawnDelta);
-		clone1.transform.SetParent(dropHolder);
-		clone1.gameObject.SetActive(true);
+		clone.transform.position = dropHolder.transform.position + Vector3.right * Random.Range(-dropSpawnDelta, dropSpawnDelta);
+		clone.transform.SetParent(dropHolder);
+		clone.gameObject.SetActive(true);
 	}
 
 	public void SpawnDrop()
