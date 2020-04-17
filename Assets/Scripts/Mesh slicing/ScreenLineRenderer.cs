@@ -15,6 +15,8 @@ public class ScreenLineRenderer : MonoBehaviour {
 
     public Material lineMaterial;
 
+	public bool IsPostRenderDrawLine;
+
     // Use this for initialization
     void Start () {
         cam = Camera.main;
@@ -23,7 +25,8 @@ public class ScreenLineRenderer : MonoBehaviour {
 
     private void OnEnable()
     {
-        Camera.onPostRender += PostRenderDrawLine;
+		if (IsPostRenderDrawLine)
+        	Camera.onPostRender += PostRenderDrawLine;
     }
 
     private void OnDisable()

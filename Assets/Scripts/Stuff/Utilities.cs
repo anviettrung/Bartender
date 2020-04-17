@@ -44,6 +44,8 @@ namespace BM // Stand for Bartender Master
 	}
 
 	// Define Events
+	[System.Serializable]
+	public class EventGameObject : UnityEvent<GameObject> { }
 	public class EventDrink : UnityEvent<TeaDrink> { }
 	public class EventDrop  : UnityEvent<LiquidDrop> { }
 }

@@ -19,9 +19,11 @@ public class MouseSlice : MonoBehaviour {
     private MeshCutter meshCutter;
     private TempMesh biggerMesh, smallerMesh;
 
-    #region Utility Functions
+	public BM.EventGameObject onCreateNewMesh = new BM.EventGameObject();
 
-    void DrawPlane(Vector3 start, Vector3 end, Vector3 normalVec)
+	#region Utility Functions
+
+	void DrawPlane(Vector3 start, Vector3 end, Vector3 normalVec)
     {
         Quaternion rotate = Quaternion.FromToRotation(Vector3.up, normalVec);
 
@@ -136,6 +138,8 @@ public class MouseSlice : MonoBehaviour {
 
         (posBigger ? positiveObjects : negativeObjects).Add(obj.transform);
         (posBigger ? negativeObjects : positiveObjects).Add(newObject.transform);
+
+		onCreateNewMesh.Invoke(newObject);
 
         return true;
     }
