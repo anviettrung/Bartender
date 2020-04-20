@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
+	public GameObject cameraGroup;
+
 	private void Start()
 	{
 		LevelManager.Instance.OpenLevel(0);

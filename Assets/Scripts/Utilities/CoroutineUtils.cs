@@ -49,6 +49,27 @@ public static class CoroutineUtils
 		yield return 0;
 	}
 
+	/*
+	 * Usage: StartCoroutine(CoroutineUtils.LinearAction(time, action))
+	 * For example:
+	 *     StartCoroutine(CoroutineUtils.LinearAction(3, (weight) => {
+	 * 			position = lerp (start, end, weight); 
+	 *        });
+	 */
+	public static IEnumerator LinearAction(float time, Action<float> callback)
+	{
+		float elapsed = 0;
+		while (elapsed < time) {
+
+			callback(elapsed / time);
+
+			yield return new WaitForEndOfFrame();
+			elapsed += Time.deltaTime;
+		}
+
+		callback(1);
+	}
+
 	public static IEnumerator SmoothMove(Transform target, Vector2 start, Vector2 end, float time)
 	{
 		// Ease out

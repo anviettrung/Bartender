@@ -9,15 +9,14 @@ public class TeaDrink : MonoBehaviour
 	[Header("General setting")]
 	public string drinkName;
 	public int renderQueueMax = 2020;
-
-	public int maxAmount;
+	public TeaRecipe recipe;
 
 	[Header("Test")]
 	public SOLiquid soLiquidToSpawn;
 	public int incAmountPerDrop;
-	public SOFillRequirement requirement;
-	public int jellyUnitRequirement = 5;
 	public bool isShaking = false;
+	public float cameraXangle;
+	public float transitionTime;
 
 	[Header("Working variable")]
 	public int currentAmount = 0;
@@ -35,6 +34,7 @@ public class TeaDrink : MonoBehaviour
 	public GameObject cupLid;
 
 	[Header("Liquid")]
+	public int maxAmount;
 	public List<CGLiquid> liquidFragment;
 	public CGLiquid lastLiquidFragment {
 		get {
@@ -96,6 +96,15 @@ public class TeaDrink : MonoBehaviour
 					LevelManager.Instance.waterFallMachineController.enabled = true;
 					LevelManager.Instance.nextJuiceButton.SetActive(true);
 
+					float startAngle = GameManager.Instance.cameraGroup.transform.eulerAngles.x;
+					StartCoroutine(CoroutineUtils.LinearAction(transitionTime, (weight) => {
+						GameManager.Instance.cameraGroup.transform.eulerAngles = new Vector3(
+							Mathf.Lerp(startAngle, cameraXangle, weight),
+							GameManager.Instance.cameraGroup.transform.eulerAngles.y,
+							GameManager.Instance.cameraGroup.transform.eulerAngles.z
+						);
+					}));
+
 					curStage = Stage.FillUp;
 				}
 				break;
@@ -143,7 +152,7 @@ public class TeaDrink : MonoBehaviour
 	#region Change Stage condition
 	public bool IsFullJelly()
 	{
-		return currentJellyUnit >= jellyUnitRequirement;
+		return currentJellyUnit >= recipe.jellyUnitRequirement;
 	}
 
 	public bool IsFullLiquid()
@@ -159,20 +168,20 @@ public class TeaDrink : MonoBehaviour
 	public float GetMatchPercentageOfRequirement()
 	{
 		float matchPercentage = 1;
-		for (int i = 0; i < requirement.components.Count; i++) {
+		for (int i = 0; i < recipe.fillRequirement.components.Count; i++) {
 			float fillPercent = 0;
 
 			for (int j = 0; j < liquidFragment.Count; j++) {
-				if (BM.Utility.CompareColor(liquidFragment[j].MainColor, requirement.components[i].soLiquid.mainColor)) {
+				if (BM.Utility.CompareColor(liquidFragment[j].MainColor, recipe.fillRequirement.components[i].soLiquid.mainColor)) {
 					fillPercent = (float)liquidFragment[j].FillAmountInt / maxAmount;
 					break;
 				}
 			}
 
-			if (fillPercent < requirement.GetComponentPercentage(i))
-				matchPercentage *= fillPercent / requirement.GetComponentPercentage(i);
+			if (fillPercent < recipe.fillRequirement.GetComponentPercentage(i))
+				matchPercentage *= fillPercent / recipe.fillRequirement.GetComponentPercentage(i);
 			else
-				matchPercentage *= requirement.GetComponentPercentage(i) / fillPercent;
+				matchPercentage *= recipe.fillRequirement.GetComponentPercentage(i) / fillPercent;
 		}
 
 		Debug.Log(matchPercentage);
@@ -189,9 +198,10 @@ public class TeaDrink : MonoBehaviour
 		clone.Init(dataModel);
 		clone.SetDrink(this);
 		clone.FillAmountFloat = AmountI2F(currentAmount);
+		clone.FillAmountUnderFloat = AmountI2F(currentAmount);
 		clone.FillAmountInt = 0;
 
-		RenderQueueSetter.Set(clone.gameObject, renderQueueMax - liquidFragment.Count);
+		RenderQueueSetter.Set(clone.gameObject, 2000 + liquidFragment.Count);
 		liquidFragment.Add(clone);
 
 		clone.transform.SetParent(this.transform);
@@ -217,11 +227,11 @@ public class TeaDrink : MonoBehaviour
 		currentAmount = delta + currentAmount;
 		lastLiquidFragment.FillAmountFloat = AmountI2F(currentAmount);
 
-		if (delta > 0) {
-			Color lastLiquidTopColor = lastLiquidFragment.TopColor;
-			for (int i = 0; i < liquidFragment.Count - 1; i++)
-				liquidFragment[i].TopColor = lastLiquidTopColor;
-		}
+		//if (delta > 0) {
+		//	Color lastLiquidTopColor = lastLiquidFragment.TopColor;
+		//	for (int i = 0; i < liquidFragment.Count - 1; i++)
+		//		liquidFragment[i].TopColor = lastLiquidTopColor;
+		//}
 
 		onFillChange.Invoke(this);
 		UpdateDropReceiver();

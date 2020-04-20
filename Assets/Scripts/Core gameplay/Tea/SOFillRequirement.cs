@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Requirement", menuName = "Liquid Fill Requirement", order = 1)]
+[System.Serializable]
 public class SOFillRequirement : ScriptableObject
 {
 	[System.Serializable]

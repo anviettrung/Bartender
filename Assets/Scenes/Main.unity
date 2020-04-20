@@ -535,8 +535,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0f404ff8523849d3bb0508356ca2bc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelData:
-  - {fileID: 11400000, guid: cd6c71000372d4b13a7d7e218f93271d, type: 2}
+  levelRecipe:
+  - {fileID: 11400000, guid: 970f373a030144d9a94623fbe7454a16, type: 2}
   isCompleteLevel: 
   drinkModel: {fileID: 1422397959}
   cuttingJellyMachine: {fileID: 1260448203}
@@ -546,7 +546,7 @@ MonoBehaviour:
   waterFallMachineController: {fileID: 252189477}
   bangChuyen: {fileID: 1522344978}
   nextJuiceButton: {fileID: 1700586374}
-  completeUIText: {fileID: 0}
+  completeUIText: {fileID: 2047372625}
 --- !u!114 &252189480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -559,6 +559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 143814087b0ab4565aa661a2d5ae4496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraGroup: {fileID: 1547433182}
 --- !u!1 &256428626
 GameObject:
   m_ObjectHideFlags: 0
@@ -2587,21 +2588,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drinkName: Milk Tea
   renderQueueMax: 2020
-  maxAmount: 1000
+  recipe: {fileID: 0}
   soLiquidToSpawn: {fileID: 11400000, guid: a3c8efea178a044b9bc461321ba41ee0, type: 2}
   incAmountPerDrop: 10
-  requirement: {fileID: 11400000, guid: cd6c71000372d4b13a7d7e218f93271d, type: 2}
-  jellyUnitRequirement: 8
   isShaking: 0
+  cameraXangle: -15
+  transitionTime: 5
   currentAmount: 0
   currentJellyUnit: 0
   liquidModel: {fileID: 5858832255139456207}
   liquidLowestFA: 0.51
-  liquidHighestFA: -1.19
+  liquidHighestFA: -1
   dropReceiverBox: {fileID: 485719091}
   dropReceiverBoxLowest: -0.73
-  dropReceiverBoxHighest: 0.941
+  dropReceiverBoxHighest: 0.891
   cupLid: {fileID: 7606314262134679088}
+  maxAmount: 1000
   liquidFragment: []
   curStage: 0
 --- !u!4 &1422397960

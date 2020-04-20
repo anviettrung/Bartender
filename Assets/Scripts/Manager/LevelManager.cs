@@ -6,7 +6,7 @@ public class LevelManager : Singleton<LevelManager>
 {
 	#region Properties
 	[Header("General")]
-	public List<SOFillRequirement> levelData;
+	public List<Recipe> levelRecipe;
 	[SerializeField] private List<bool> isCompleteLevel;
 
 	[Header("Opening-level infomation")]
@@ -42,7 +42,7 @@ public class LevelManager : Singleton<LevelManager>
 		CurDrink = Instantiate(drinkModel);
 
 		// Read level Setting
-		CurDrink.requirement = levelData[x];
+		CurDrink.recipe = (TeaRecipe)levelRecipe[x];
 
 		// Enable / trigger in
 		CurDrink.gameObject.SetActive(true);

@@ -38,6 +38,14 @@ public class CGLiquid : MonoBehaviour
 			rend.material.SetFloat("_FillAmount", value);
 		}
 	}
+	public float FillAmountUnderFloat {
+		get {
+			return rend.material.GetFloat("_FillAmountUnder");
+		}
+		set {
+			rend.material.SetFloat("_FillAmountUnder", value);
+		}
+	}
 
 	public int FillAmountInt;
 
