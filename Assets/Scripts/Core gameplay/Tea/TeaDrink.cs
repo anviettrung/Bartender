@@ -88,20 +88,20 @@ public class TeaDrink : MonoBehaviour
 			case Stage.CuttingJelly:
 				if (IsFullJelly()) {
 					// disable stage
-					LevelManager.Instance.cuttingJellyMachine.gameObject.SetActive(false);
-					LevelManager.Instance.bigJelly.SetActive(false);
+					GlobalAccess.Instance.cuttingJellyMachine.gameObject.SetActive(false);
+					GlobalAccess.Instance.bigJelly.SetActive(false);
 
 					// enable next stage
-					LevelManager.Instance.waterFallMachine.gameObject.SetActive(true);
-					LevelManager.Instance.waterFallMachineController.enabled = true;
-					LevelManager.Instance.nextJuiceButton.SetActive(true);
+					GlobalAccess.Instance.waterFallMachine.gameObject.SetActive(true);
+					GlobalAccess.Instance.waterFallMachineController.enabled = true;
+					GlobalAccess.Instance.nextJuiceButton.SetActive(true);
 
-					float startAngle = GameManager.Instance.cameraGroup.transform.eulerAngles.x;
+					float startAngle = GlobalAccess.Instance.cameraGroup.transform.eulerAngles.x;
 					StartCoroutine(CoroutineUtils.LinearAction(transitionTime, (weight) => {
-						GameManager.Instance.cameraGroup.transform.eulerAngles = new Vector3(
+						GlobalAccess.Instance.cameraGroup.transform.eulerAngles = new Vector3(
 							Mathf.Lerp(startAngle, cameraXangle, weight),
-							GameManager.Instance.cameraGroup.transform.eulerAngles.y,
-							GameManager.Instance.cameraGroup.transform.eulerAngles.z
+							GlobalAccess.Instance.cameraGroup.transform.eulerAngles.y,
+							GlobalAccess.Instance.cameraGroup.transform.eulerAngles.z
 						);
 					}));
 
@@ -110,10 +110,10 @@ public class TeaDrink : MonoBehaviour
 				break;
 			case Stage.FillUp:
 				if (IsFullLiquid()) {
-					LevelManager.Instance.waterFallMachine.gameObject.SetActive(false);
-					LevelManager.Instance.waterFallMachineController.enabled = false;
-					LevelManager.Instance.nextJuiceButton.SetActive(false);
-					LevelManager.Instance.bangChuyen.SetActive(false);
+					GlobalAccess.Instance.waterFallMachine.gameObject.SetActive(false);
+					GlobalAccess.Instance.waterFallMachineController.enabled = false;
+					GlobalAccess.Instance.nextJuiceButton.SetActive(false);
+					GlobalAccess.Instance.bangChuyen.SetActive(false);
 
 					curStage = Stage.Shake;
 				}
@@ -138,7 +138,7 @@ public class TeaDrink : MonoBehaviour
 					
 				break;
 			case Stage.Complete:
-				LevelManager.Instance.completeUIText.SetActive(true);
+				GlobalAccess.Instance.completeUIText.SetActive(true);
 				break;
 		}
 

@@ -22,16 +22,7 @@ public class LevelManager : Singleton<LevelManager>
 		}
 	}
 
-	[Header("Temp resources")]
 	public TeaDrink drinkModel;
-	public CuttingJellyMachine cuttingJellyMachine;
-	public GameObject bigJelly;
-	public MouseSlice sliceManager;
-	public WaterFallMachine waterFallMachine;
-	public CGController waterFallMachineController;
-	public GameObject bangChuyen;
-	public GameObject nextJuiceButton;
-	public GameObject completeUIText;
 
 	#endregion
 
