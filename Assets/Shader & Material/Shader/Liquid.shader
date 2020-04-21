@@ -113,7 +113,7 @@
                float4 resultColored = result * col;
                // both together, with the texture
                float4 finalResult = resultColored + foamColored;                
-               finalResult.rgb += RimResult;
+               finalResult.rgb -= RimResult;
 
                // color of backfaces/ top
                float4 topColor = _TopColor * (foam + result);

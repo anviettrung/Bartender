@@ -55,11 +55,17 @@ public class CGLiquid : MonoBehaviour
 
 	public void Init(SOLiquid _data)
 	{
-		MainColor = _data.mainColor;
-		TopColor = _data.topColor;
-		RimColor = _data.rimColor;
-
 		data = _data;
+		Init();
+	}
+
+	public void Init()
+	{
+		if (data != null) {
+			MainColor = data.mainColor;
+			TopColor = data.topColor;
+			RimColor = data.rimColor;
+		}
 	}
 
 	public void SetDrink(TeaDrink d)
