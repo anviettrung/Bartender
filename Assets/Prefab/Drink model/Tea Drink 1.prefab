@@ -449,7 +449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drinkName: Milk Tea
   renderQueueMax: 2020
-  recipe: {fileID: 0}
+  recipe: {fileID: 11400000, guid: 970f373a030144d9a94623fbe7454a16, type: 2}
   soLiquidToSpawn: {fileID: 11400000, guid: a3c8efea178a044b9bc461321ba41ee0, type: 2}
   incAmountPerDrop: 10
   isShaking: 0

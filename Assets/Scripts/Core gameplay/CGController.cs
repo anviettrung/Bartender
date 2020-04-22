@@ -6,11 +6,7 @@ using UnityEngine.EventSystems;
 public class CGController : MonoBehaviour
 {
 	[Header("Model")]
-	public CGCupRenderer drinkModel;
 	public WaterFallMachine waterFallMachineModel;
-
-	[Header("Tracking")]
-	public CGCupRenderer currentDrink;
 
 	[Header("Setting")]
 	public bool play;
