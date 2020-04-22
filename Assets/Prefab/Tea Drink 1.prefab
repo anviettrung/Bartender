@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae6191f639fe46b882bb62c73d99e84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 9667136cbe7cb4be599efe06a2d7a73e, type: 2}
+  data: {fileID: 11400000, guid: a3c8efea178a044b9bc461321ba41ee0, type: 2}
   FillAmountInt: 0
   drink: {fileID: 0}
   rend: {fileID: 2424062977409105075}
@@ -453,7 +453,7 @@ MonoBehaviour:
   soLiquidToSpawn: {fileID: 11400000, guid: a3c8efea178a044b9bc461321ba41ee0, type: 2}
   incAmountPerDrop: 10
   isShaking: 0
-  cameraXangle: -15
+  cameraXangle: -10
   transitionTime: 0.5
   currentAmount: 0
   currentJellyUnit: 0

@@ -21,9 +21,13 @@ public class GlobalAccess : Singleton<GlobalAccess>
 
 	#endregion
 
-	public void Start()
+	private void Start()
 	{
-		LevelManager.Instance.OpenLevel(0);
+		switch (SceneMaster.Instance.GetCurrentScene()) {
+			case SceneMaster.Scene.TeaDrink:
+				LevelManager.Instance.OpenLevel(0);
+				break;
+		}
 	}
 
 	public void StartGame()

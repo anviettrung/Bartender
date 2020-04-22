@@ -15,6 +15,16 @@ public class SceneMaster : Singleton<SceneMaster>
 		TeaDrink
 	}
 
+	//private void Awake()
+	//{
+	//	transitor.gameObject.SetActive(true);
+	//}
+
+	public Scene GetCurrentScene()
+	{
+		return (Scene)SceneManager.GetActiveScene().buildIndex;
+	}
+
 	public void LoadNextScene()
 	{
 		LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -27,6 +37,8 @@ public class SceneMaster : Singleton<SceneMaster>
 
 	public void LoadScene(int x)
 	{
+		transitor.gameObject.SetActive(true);
+
 		// Play transition
 		transitor.SetTrigger("Start");
 

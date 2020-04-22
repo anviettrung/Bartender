@@ -153,7 +153,6 @@ public class TeaDrink : MonoBehaviour
 
 	#endregion
 
-
 	#region Check Requirements
 
 	public float GetMatchPercentageOfRequirement()
@@ -189,7 +188,8 @@ public class TeaDrink : MonoBehaviour
 		clone.Init(dataModel);
 		clone.SetDrink(this);
 		clone.FillAmountFloat = AmountI2F(currentAmount);
-		clone.FillAmountUnderFloat = AmountI2F(currentAmount);
+		if (liquidFragment.Count > 0) // ignore first fragment
+			clone.FillAmountUnderFloat = AmountI2F(currentAmount);
 		clone.FillAmountInt = 0;
 
 		RenderQueueSetter.Set(clone.gameObject, 2000 + liquidFragment.Count);
