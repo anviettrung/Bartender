@@ -17,7 +17,7 @@
  
     SubShader
     {
-        Tags {"Queue"="Geometry"  "DisableBatching" = "True" }
+        Tags {"Queue"="Geometry"  "DisableBatching" = "True"}
   
         Pass
         {
@@ -95,6 +95,8 @@
                
              fixed4 frag (v2f i, fixed facing : VFACE) : SV_Target
              {
+                clip(0.5 - i.fillEdge);
+             
                // sample the texture
                fixed4 col = tex2D(_MainTex, i.uv) * _Tint;
                // apply fog

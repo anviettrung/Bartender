@@ -1951,10 +1951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4445f330f6f1428f97b0b48599d4fe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drinkModel: {fileID: 3020275635385782303, guid: 1167046f02d2346c58898389ca6aec13,
-    type: 3}
   waterFallMachineModel: {fileID: 1219240171}
-  currentDrink: {fileID: 0}
   play: 0
   cooldownTime: 0.05
   readyWater: 1
@@ -3789,15 +3786,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: aba645bd147b64e1da6dd520a34f6326, type: 3}
-  m_Color: {r: 0.9882353, g: 0.48235294, b: 0.9882353, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 06629b51f1f934d30a6be2f3d3186c01, type: 3}
+  m_Color: {r: 0.14117648, g: 1, b: 0.023529412, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &2129628686
@@ -4033,10 +4030,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4150302781543483503, guid: 17eacb771a5ac4eb79cf66e304216269,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7554250192674832039, guid: 17eacb771a5ac4eb79cf66e304216269,
         type: 3}
       propertyPath: m_Name
       value: Tea Drink
+      objectReference: {fileID: 0}
+    - target: {fileID: 7554250192674832039, guid: 17eacb771a5ac4eb79cf66e304216269,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7554250192674832041, guid: 17eacb771a5ac4eb79cf66e304216269,
         type: 3}
