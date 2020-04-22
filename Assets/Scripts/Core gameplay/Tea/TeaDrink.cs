@@ -71,15 +71,6 @@ public class TeaDrink : MonoBehaviour
 
 	public void Update()
 	{
-		//if (Input.GetKeyDown(KeyCode.G)) {
-		//	CreateLiquidFragment(soLiquidToSpawn);
-		//} else if (Input.GetKeyDown(KeyCode.H)) {
-		//	IncreaseLiquidAmount(incAmountPerDrop);
-		//} else if (Input.GetKeyDown(KeyCode.J)) {
-		//	for (int i = 0; i < liquidFragment.Count-1; i++)
-		//		liquidFragment[i].LerpToLiquid(lastLiquidFragment, 1);
-		//}
-
 		switch (curStage) {
 			case Stage.Initialization:
 				// add condition later;

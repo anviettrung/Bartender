@@ -25,4 +25,9 @@ public class GlobalAccess : Singleton<GlobalAccess>
 	{
 		LevelManager.Instance.OpenLevel(0);
 	}
+
+	public void StartGame()
+	{
+		SceneMaster.Instance.LoadNextScene();
+	}
 }
