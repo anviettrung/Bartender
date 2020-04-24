@@ -12,13 +12,9 @@ public class SceneMaster : Singleton<SceneMaster>
 	{
 		Preload,
 		Menu,
-		TeaDrink
+		TeaDrink,
+		Cocktail
 	}
-
-	//private void Awake()
-	//{
-	//	transitor.gameObject.SetActive(true);
-	//}
 
 	public Scene GetCurrentScene()
 	{

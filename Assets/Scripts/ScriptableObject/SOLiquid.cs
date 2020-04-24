@@ -12,7 +12,7 @@ public class SOLiquid : ScriptableObject
 
 	public static SOLiquid Combine(List<CGLiquid> liquids, int total)
 	{
-		SOLiquid result = new SOLiquid();
+		SOLiquid result = CreateInstance<SOLiquid>();
 
 		for (int i = 0; i < liquids.Count; i++) {
 

@@ -223,8 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0f404ff8523849d3bb0508356ca2bc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelRecipe:
-  - {fileID: 11400000, guid: 970f373a030144d9a94623fbe7454a16, type: 2}
+  recipeBasicSet: {fileID: 11400000, guid: b17ea7a597732420da2c93812104468e, type: 2}
   isCompleteLevel: 
   drinkModel: {fileID: 7554250192674832038, guid: 17eacb771a5ac4eb79cf66e304216269,
     type: 3}

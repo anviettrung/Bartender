@@ -37,6 +37,9 @@ public class GlobalAccess : Singleton<GlobalAccess>
 			case SceneMaster.Scene.TeaDrink:
 				LevelManager.Instance.OpenLevel(0);
 				break;
+			case SceneMaster.Scene.Cocktail:
+				LevelManager.Instance.OpenLevel(1);
+				break;
 		}
 	}
 
@@ -44,4 +47,23 @@ public class GlobalAccess : Singleton<GlobalAccess>
 	{
 		SceneMaster.Instance.LoadNextScene();
 	}
+
+	#region Drink model
+	[Header("Drink model")]
+	public TeaDrink teaDrinkModel;
+	public Drink cocktailDrinkModel;
+
+	public Drink GetModel(Recipe.DrinkType type)
+	{
+		switch (type) {
+			case Recipe.DrinkType.Tea:
+				return teaDrinkModel;
+			case Recipe.DrinkType.Cocktail:
+				return cocktailDrinkModel;
+			default:
+				return null;
+		}
+	}
+
+	#endregion
 }

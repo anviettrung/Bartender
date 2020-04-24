@@ -6,12 +6,12 @@ public class LevelManager : Singleton<LevelManager>
 {
 	#region Properties
 	[Header("General")]
-	public List<Recipe> levelRecipe;
+	public RecipeSet recipeBasicSet;
 	[SerializeField] private List<bool> isCompleteLevel;
 
 	[Header("Opening-level infomation")]
-	private TeaDrink curDrink;
-	public TeaDrink CurDrink {
+	private Drink curDrink;
+	public Drink CurDrink {
 		get {
 			return curDrink;
 		}
@@ -22,18 +22,21 @@ public class LevelManager : Singleton<LevelManager>
 		}
 	}
 
-	public TeaDrink drinkModel;
-
 	#endregion
 
 	#region Open Level
 	public bool OpenLevel(int x)
 	{
 		// Generate empty drink
-		CurDrink = Instantiate(drinkModel);
+		Drink model = GlobalAccess.Instance.GetModel(recipeBasicSet.recipes[x].GetDrinkType());
+		if (model == null) {
+			Debug.LogWarning("Can't find drink model\nInstantiate failed");
+			return false;
+		}
+		CurDrink = Instantiate(model);
 
-		// Read level Setting
-		CurDrink.recipe = (TeaRecipe)levelRecipe[x];
+		// Setting for new drink instance
+		CurDrink.base_recipe = recipeBasicSet.recipes[x];
 
 		// Enable / trigger in
 		CurDrink.gameObject.SetActive(true);

@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Tea Recipe", menuName = "Recipe/Tea Recipe", order = 0)]
+[CreateAssetMenu(fileName = "Tea Recipe", menuName = "Recipe/Tea Recipe")]
 public class TeaRecipe : Recipe
 {
 	#region Properties
@@ -15,5 +16,6 @@ public class TeaRecipe : Recipe
 	{
 		return DrinkType.Tea;
 	}
+
 	#endregion
 }

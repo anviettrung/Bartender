@@ -198,18 +198,18 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 29623587}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3108866692754721152}
-        m_MethodName: StartGame
-        m_Mode: 1
+        m_MethodName: LoadScene
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -921,12 +921,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3108866692754721152}
-        m_MethodName: StartGame
-        m_Mode: 1
+        m_MethodName: LoadScene
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1143,13 +1143,13 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 96fdb3ab70b18471e80a68a28d6a4abf, type: 3}
 --- !u!114 &3108866692754721152 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4148752358326089887, guid: 96fdb3ab70b18471e80a68a28d6a4abf,
+  m_CorrespondingSourceObject: {fileID: 3779614664912420216, guid: 96fdb3ab70b18471e80a68a28d6a4abf,
     type: 3}
   m_PrefabInstance: {fileID: 3108866692754721151}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a528de5f1ccfb4479abca9b35b1a160a, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c59162dd47704c11be3b1072c751270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

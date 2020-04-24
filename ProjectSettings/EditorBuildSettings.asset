@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: b115b5a5f71914e9d9774aa00ddb7239
   - enabled: 1
-    path: Assets/Scenes/Main.unity
+    path: Assets/Scenes/Tea.unity
     guid: 90ea74424dca9432fbc3bb6db430ac48
+  - enabled: 1
+    path: Assets/Scenes/Cocktail.unity
+    guid: 09049baceb00745369ba21861edc9648
   m_configObjects: {}

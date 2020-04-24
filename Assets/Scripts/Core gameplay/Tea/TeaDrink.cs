@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TeaDrink : MonoBehaviour
+public class TeaDrink : Drink
 {
 	#region Properties
 	[Header("General setting")]
-	public string drinkName;
+	public string drinkName; 
+	public TeaRecipe recipe { get { return (TeaRecipe)base_recipe; } }
 	public int renderQueueMax = 2020;
-	public TeaRecipe recipe;
 
 	[Header("Test")]
 	public SOLiquid soLiquidToSpawn;
@@ -56,9 +56,6 @@ public class TeaDrink : MonoBehaviour
 
 	[Header("Events")]
 	public BM.EventDrink onFillChange = new BM.EventDrink();
-
-
-
 
 	#endregion
 
@@ -207,7 +204,7 @@ public class TeaDrink : MonoBehaviour
 				matchPercentage *= recipe.fillRequirement.GetComponentPercentage(i) / fillPercent;
 		}
 
-		Debug.Log(matchPercentage);
+//		Debug.Log(matchPercentage);
 		return matchPercentage;
 	}
 
