@@ -25,8 +25,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BackFaceExtend: 0
-    - _FillAmount: -0.17
-    - _FillAmountUnder: 1.32
+    - _FillAmount: 0.2
+    - _FillAmountUnder: 3.91
     - _Rim: 0
     - _RimPower: 2.35
     - _WobbleX: 0

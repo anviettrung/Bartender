@@ -457,9 +457,10 @@ MonoBehaviour:
   transitionTime: 0.5
   currentAmount: 0
   currentJellyUnit: 0
+  checkCondition: 1
   liquidModel: {fileID: 4150302781543483502}
   liquidLowestFA: 0.51
-  liquidHighestFA: -1.19
+  liquidHighestFA: -0.52
   dropReceiverBox: {fileID: 7554250193616785554}
   dropReceiverBoxLowest: -0.73
   dropReceiverBoxHighest: 0.891

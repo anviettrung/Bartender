@@ -97,7 +97,7 @@ public class TeaDrink : MonoBehaviour
 							// enable next stage
 							GlobalAccess.Instance.waterFallMachine.gameObject.SetActive(true);
 							GlobalAccess.Instance.waterFallMachineController.enabled = true;
-							GlobalAccess.Instance.nextJuiceButton.SetActive(true);
+							GlobalAccess.Instance.waterFallUIButtonGroup.SetActive(true);
 
 							GlobalAccess.Instance.cameraTransition.FocusView("WaterFall", transitionTime);
 
@@ -109,7 +109,7 @@ public class TeaDrink : MonoBehaviour
 					if (IsFullLiquid()) {
 						GlobalAccess.Instance.waterFallMachine.gameObject.SetActive(false);
 						GlobalAccess.Instance.waterFallMachineController.enabled = false;
-						GlobalAccess.Instance.nextJuiceButton.SetActive(false);
+						GlobalAccess.Instance.waterFallUIButtonGroup.SetActive(false);
 						GlobalAccess.Instance.bangChuyen.SetActive(false);
 
 						curStage = Stage.Shake;
@@ -117,14 +117,27 @@ public class TeaDrink : MonoBehaviour
 					break;
 				case Stage.Shake:
 					if (!isShaking) {
+						SOLiquid finalColor = SOLiquid.Combine(liquidFragment, maxAmount);
 						StartCoroutine(CoroutineUtils.Chain(
 							CoroutineUtils.Do(() => {
 								cupLid.gameObject.SetActive(true);
 								isShaking = true;
 							}),
 							CoroutineUtils.WaitForSeconds(1),
-							// Shake
-							Shake(10, 10, 2),
+							CoroutineUtils.LinearAction(2, (weight) => {
+								// Shake object
+								gameObject.transform.eulerAngles = new Vector3(
+									gameObject.transform.eulerAngles.x,
+									gameObject.transform.eulerAngles.y,
+									Mathf.Sin(10 * weight * 2) * 10
+								);
+
+								for (int i = 0; i < liquidFragment.Count; i++) {
+									liquidFragment[i].MainColor = Color.Lerp(liquidFragment[i].data.mainColor, finalColor.mainColor, weight);
+									liquidFragment[i].TopColor = Color.Lerp(liquidFragment[i].data.topColor, finalColor.topColor, weight);
+									liquidFragment[i].RimColor = Color.Lerp(liquidFragment[i].data.rimColor, finalColor.rimColor, weight);
+								}
+							}),
 							CoroutineUtils.Do(() => {
 								gameObject.transform.eulerAngles = Vector3.zero;
 
@@ -247,7 +260,7 @@ public class TeaDrink : MonoBehaviour
 		return Mathf.Lerp(liquidLowestFA, liquidHighestFA, (float)amount / maxAmount);
 	}
 
-	public void LerpAllLiquid()
+	public void LerpLiquids()
 	{
 		SOLiquid final = new SOLiquid();
 

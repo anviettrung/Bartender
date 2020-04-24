@@ -18,6 +18,7 @@ public class GlobalAccess : Singleton<GlobalAccess>
 	public CGController waterFallMachineController;
 	public GameObject bangChuyen;
 	public GameObject nextJuiceButton;
+	public GameObject waterFallUIButtonGroup;
 	public GameObject completeUIText;
 
 	#endregion
