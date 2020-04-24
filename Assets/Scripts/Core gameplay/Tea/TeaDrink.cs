@@ -107,30 +107,45 @@ public class TeaDrink : MonoBehaviour
 					break;
 				case Stage.FillUp:
 					if (IsFullLiquid()) {
+						checkCondition = false;
+
 						GlobalAccess.Instance.waterFallMachine.gameObject.SetActive(false);
 						GlobalAccess.Instance.waterFallMachineController.enabled = false;
 						GlobalAccess.Instance.waterFallUIButtonGroup.SetActive(false);
 						GlobalAccess.Instance.bangChuyen.SetActive(false);
+						cupLid.gameObject.SetActive(true);
+						GlobalAccess.Instance.shakeGuide.SetActive(true);
+						#if UNITY_EDITOR
+							GlobalAccess.Instance.shakeTriggerButton.SetActive(true);
+						#endif
+
+						GlobalAccess.Instance.cameraTransition.FocusView("Shake", transitionTime);
 
 						curStage = Stage.Shake;
+						checkCondition = true;
 					}
 					break;
 				case Stage.Shake:
-					if (!isShaking) {
+					if (GlobalAccess.Instance.shakeDetection.IsShaking()) {
+						checkCondition = false;
+						GlobalAccess.Instance.shakeGuide.SetActive(false);
+						#if UNITY_EDITOR
+							GlobalAccess.Instance.shakeTriggerButton.SetActive(false);
+						#endif
+
 						SOLiquid finalColor = SOLiquid.Combine(liquidFragment, maxAmount);
 						StartCoroutine(CoroutineUtils.Chain(
 							CoroutineUtils.Do(() => {
-								cupLid.gameObject.SetActive(true);
 								isShaking = true;
 							}),
-							CoroutineUtils.WaitForSeconds(1),
-							CoroutineUtils.LinearAction(2, (weight) => {
+							//CoroutineUtils.WaitForSeconds(1),
+							CoroutineUtils.LinearAction(1, (weight) => {
 								// Shake object
-								gameObject.transform.eulerAngles = new Vector3(
-									gameObject.transform.eulerAngles.x,
-									gameObject.transform.eulerAngles.y,
-									Mathf.Sin(10 * weight * 2) * 10
-								);
+								//gameObject.transform.eulerAngles = new Vector3(
+								//	gameObject.transform.eulerAngles.x,
+								//	gameObject.transform.eulerAngles.y,
+								//	Mathf.Sin(10 * weight * 2) * 10
+								//);
 
 								for (int i = 0; i < liquidFragment.Count; i++) {
 									liquidFragment[i].MainColor = Color.Lerp(liquidFragment[i].data.mainColor, finalColor.mainColor, weight);
@@ -139,16 +154,15 @@ public class TeaDrink : MonoBehaviour
 								}
 							}),
 							CoroutineUtils.Do(() => {
-								gameObject.transform.eulerAngles = Vector3.zero;
-
 								curStage = Stage.Complete;
+								GlobalAccess.Instance.textEffectAnimator.SetTrigger("Perfect");
+								checkCondition = true;
 							})
 						));
 					}
 
 					break;
 				case Stage.Complete:
-					GlobalAccess.Instance.completeUIText.SetActive(true);
 					break;
 			}
 		}
@@ -294,6 +308,8 @@ public class TeaDrink : MonoBehaviour
 			elapsed += Time.deltaTime;
 		} while (elapsed < time);
 	}
+
+
 
 	#endregion
 }

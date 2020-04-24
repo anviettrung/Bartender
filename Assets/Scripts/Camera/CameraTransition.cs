@@ -24,7 +24,7 @@ public class CameraTransition : MonoBehaviour
 
 			StartCoroutine(CoroutineUtils.LinearAction(transitionTime, (weight) => {
 				gameObject.transform.position = Vector3.Lerp(startV.position, focusV.position, weight);
-				gameObject.transform.eulerAngles = Vector3.Lerp(startV.rotation, focusV.rotation, weight);
+				gameObject.transform.eulerAngles = AngleLerp(startV.rotation, focusV.rotation, weight);
 				gameObject.transform.localScale = Vector3.Lerp(startV.scale, focusV.scale, weight);
 			}));
 
@@ -53,5 +53,14 @@ public class CameraTransition : MonoBehaviour
 	public void SaveCurrentView()
 	{
 		camViews.Add(GetCurrentViewSetting());
+	}
+
+	Vector3 AngleLerp(Vector3 StartAngle, Vector3 FinishAngle, float t)
+	{
+		float xLerp = Mathf.LerpAngle(StartAngle.x, FinishAngle.x, t);
+		float yLerp = Mathf.LerpAngle(StartAngle.y, FinishAngle.y, t);
+		float zLerp = Mathf.LerpAngle(StartAngle.z, FinishAngle.z, t);
+		Vector3 Lerped = new Vector3(xLerp, yLerp, zLerp);
+		return Lerped;
 	}
 }

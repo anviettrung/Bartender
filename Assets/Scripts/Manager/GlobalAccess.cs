@@ -17,9 +17,17 @@ public class GlobalAccess : Singleton<GlobalAccess>
 	public WaterFallMachine waterFallMachine;
 	public CGController waterFallMachineController;
 	public GameObject bangChuyen;
+
+	[Header("UI")]
 	public GameObject nextJuiceButton;
 	public GameObject waterFallUIButtonGroup;
 	public GameObject completeUIText;
+	public GameObject shakeGuide;
+	public GameObject shakeTriggerButton;
+
+	[Header("Other")]
+	public ShakeDetection shakeDetection;
+	public Animator textEffectAnimator;
 
 	#endregion
 

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 50994191639836594}
   - component: {fileID: 4148752358326089887}
   - component: {fileID: 3779614664912420216}
+  - component: {fileID: 1455518886}
   m_Layer: 0
   m_Name: Global Access
   m_TagString: Untagged
@@ -46,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraGroup: {fileID: 0}
+  cameraTransition: {fileID: 0}
   drinkModel: {fileID: 0}
   cuttingJellyMachine: {fileID: 0}
   bigJelly: {fileID: 0}
@@ -54,7 +56,11 @@ MonoBehaviour:
   waterFallMachineController: {fileID: 0}
   bangChuyen: {fileID: 0}
   nextJuiceButton: {fileID: 0}
+  waterFallUIButtonGroup: {fileID: 0}
   completeUIText: {fileID: 0}
+  shakeGuide: {fileID: 0}
+  shakeTriggerButton: {fileID: 0}
+  shakeDetection: {fileID: 1455518886}
 --- !u!114 &3779614664912420216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,6 +75,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitor: {fileID: 8721387704265899652}
   transitionTime: 1
+--- !u!114 &1455518886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988616052342533569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee1812f790ac4a8cac001fde67c8f55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3108866693579299468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -190,6 +208,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5921246294343164940, guid: 7f077c7f18f9c4ef4862c9fa719da0ef,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f077c7f18f9c4ef4862c9fa719da0ef, type: 3}
