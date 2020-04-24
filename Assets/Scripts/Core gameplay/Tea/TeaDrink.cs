@@ -21,6 +21,7 @@ public class TeaDrink : MonoBehaviour
 	[Header("Working variable")]
 	public int currentAmount = 0;
 	public int currentJellyUnit = 0;
+	public bool checkCondition = true;
 
 	[Header("Cup setting")]
 	public CGLiquid liquidModel;
@@ -56,6 +57,9 @@ public class TeaDrink : MonoBehaviour
 	[Header("Events")]
 	public BM.EventDrink onFillChange = new BM.EventDrink();
 
+
+
+
 	#endregion
 
 	#region Unity Callback
@@ -71,68 +75,70 @@ public class TeaDrink : MonoBehaviour
 
 	public void Update()
 	{
-		switch (curStage) {
-			case Stage.Initialization:
-				// add condition later;
-				curStage = Stage.CuttingJelly;
-				break;
-			case Stage.CuttingJelly:
-				if (IsFullJelly()) {
-					// disable stage
-					GlobalAccess.Instance.cuttingJellyMachine.gameObject.SetActive(false);
-					GlobalAccess.Instance.bigJelly.SetActive(false);
+		if (checkCondition) {
+			switch (curStage) {
+				case Stage.Initialization:
+					// add condition later;
+					curStage = Stage.CuttingJelly;
 
-					// enable next stage
-					GlobalAccess.Instance.waterFallMachine.gameObject.SetActive(true);
-					GlobalAccess.Instance.waterFallMachineController.enabled = true;
-					GlobalAccess.Instance.nextJuiceButton.SetActive(true);
+					GlobalAccess.Instance.cameraTransition.FocusView("Cutter", 0);
 
-					float startAngle = GlobalAccess.Instance.cameraGroup.transform.eulerAngles.x;
-					StartCoroutine(CoroutineUtils.LinearAction(transitionTime, (weight) => {
-						GlobalAccess.Instance.cameraGroup.transform.eulerAngles = new Vector3(
-							Mathf.Lerp(startAngle, cameraXangle, weight),
-							GlobalAccess.Instance.cameraGroup.transform.eulerAngles.y,
-							GlobalAccess.Instance.cameraGroup.transform.eulerAngles.z
-						);
-					}));
+					break;
+				case Stage.CuttingJelly:
+					if (IsFullJelly()) {
+						checkCondition = false;
 
-					curStage = Stage.FillUp;
-				}
-				break;
-			case Stage.FillUp:
-				if (IsFullLiquid()) {
-					GlobalAccess.Instance.waterFallMachine.gameObject.SetActive(false);
-					GlobalAccess.Instance.waterFallMachineController.enabled = false;
-					GlobalAccess.Instance.nextJuiceButton.SetActive(false);
-					GlobalAccess.Instance.bangChuyen.SetActive(false);
+						StartCoroutine(CoroutineUtils.DelaySeconds(() => {
+							checkCondition = true;
 
-					curStage = Stage.Shake;
-				}
-				break;
-			case Stage.Shake:
-				if (!isShaking) {
-					StartCoroutine(CoroutineUtils.Chain(
-						CoroutineUtils.Do(() => {
-							cupLid.gameObject.SetActive(true);
-							isShaking = true;
-						}),
-						CoroutineUtils.WaitForSeconds(1),
-						// Shake
-						Shake(10, 10, 2),
-						CoroutineUtils.Do(() => {
-							gameObject.transform.eulerAngles = Vector3.zero;
+							// disable stage
+							GlobalAccess.Instance.cuttingJellyMachine.gameObject.SetActive(false);
 
-							curStage = Stage.Complete;
-						})
-					));
-				}
-					
-				break;
-			case Stage.Complete:
-				GlobalAccess.Instance.completeUIText.SetActive(true);
-				break;
+							// enable next stage
+							GlobalAccess.Instance.waterFallMachine.gameObject.SetActive(true);
+							GlobalAccess.Instance.waterFallMachineController.enabled = true;
+							GlobalAccess.Instance.nextJuiceButton.SetActive(true);
+
+							GlobalAccess.Instance.cameraTransition.FocusView("WaterFall", transitionTime);
+
+							curStage = Stage.FillUp;
+						}, 1));
+					}
+					break;
+				case Stage.FillUp:
+					if (IsFullLiquid()) {
+						GlobalAccess.Instance.waterFallMachine.gameObject.SetActive(false);
+						GlobalAccess.Instance.waterFallMachineController.enabled = false;
+						GlobalAccess.Instance.nextJuiceButton.SetActive(false);
+						GlobalAccess.Instance.bangChuyen.SetActive(false);
+
+						curStage = Stage.Shake;
+					}
+					break;
+				case Stage.Shake:
+					if (!isShaking) {
+						StartCoroutine(CoroutineUtils.Chain(
+							CoroutineUtils.Do(() => {
+								cupLid.gameObject.SetActive(true);
+								isShaking = true;
+							}),
+							CoroutineUtils.WaitForSeconds(1),
+							// Shake
+							Shake(10, 10, 2),
+							CoroutineUtils.Do(() => {
+								gameObject.transform.eulerAngles = Vector3.zero;
+
+								curStage = Stage.Complete;
+							})
+						));
+					}
+
+					break;
+				case Stage.Complete:
+					GlobalAccess.Instance.completeUIText.SetActive(true);
+					break;
+			}
 		}
-
 	}
 	#endregion
 
@@ -183,7 +189,7 @@ public class TeaDrink : MonoBehaviour
 	#region Liquid Handler
 	public void CreateLiquidFragment(SOLiquid dataModel)
 	{
-		CGLiquid clone = Instantiate(liquidModel).GetComponent<CGLiquid>();
+		CGLiquid clone = Instantiate(liquidModel, transform).GetComponent<CGLiquid>();
 
 		clone.Init(dataModel);
 		clone.SetDrink(this);
@@ -195,7 +201,7 @@ public class TeaDrink : MonoBehaviour
 		RenderQueueSetter.Set(clone.gameObject, 2000 + liquidFragment.Count);
 		liquidFragment.Add(clone);
 
-		clone.transform.SetParent(this.transform);
+		//clone.transform.SetParent(this.transform);
 		clone.gameObject.SetActive(true);
 	}
 

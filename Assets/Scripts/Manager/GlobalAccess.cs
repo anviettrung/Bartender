@@ -7,6 +7,7 @@ public class GlobalAccess : Singleton<GlobalAccess>
 	#region All Access References
 	[Header("Camera")]
 	public GameObject cameraGroup;
+	public CameraTransition cameraTransition;
 
 	[Header("old Level Manager access")]
 	public TeaDrink drinkModel;

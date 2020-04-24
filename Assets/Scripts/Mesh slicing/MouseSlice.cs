@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MouseSlice : MonoBehaviour {
 
@@ -20,6 +21,7 @@ public class MouseSlice : MonoBehaviour {
     private TempMesh biggerMesh, smallerMesh;
 
 	public BM.EventGameObject onCreateNewMesh = new BM.EventGameObject();
+	public UnityEvent onCutting = new UnityEvent();
 
 	#region Utility Functions
 
@@ -50,7 +52,7 @@ public class MouseSlice : MonoBehaviour {
         lineRenderer.OnLineDrawn -= OnLineDrawn;
     }
 
-    private void OnLineDrawn(Vector3 start, Vector3 end, Vector3 depth)
+    private void OnLineDrawn(Vector3 point, Vector3 start, Vector3 end, Vector3 depth)
     {
         var planeTangent = (end - start).normalized;
 
@@ -62,7 +64,9 @@ public class MouseSlice : MonoBehaviour {
 
         if (drawPlane) DrawPlane(start, end, normalVec);
 
-        SliceObjects(start, normalVec);
+        SliceObjects(point, normalVec);
+
+		onCutting.Invoke();
     }
     
 
@@ -140,6 +144,7 @@ public class MouseSlice : MonoBehaviour {
         (posBigger ? negativeObjects : positiveObjects).Add(newObject.transform);
 
 		onCreateNewMesh.Invoke(newObject);
+		onCreateNewMesh.Invoke(obj);
 
         return true;
     }

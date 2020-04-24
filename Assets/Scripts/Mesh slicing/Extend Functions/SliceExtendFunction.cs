@@ -34,4 +34,13 @@ public class SliceExtendFunction : MonoBehaviour
 			c.isTrigger = false;
 		}
 	}
+
+	public void TurnOnGravity(GameObject obj)
+	{
+		Rigidbody rb = obj.GetComponent<Rigidbody>();
+		if (rb != null) {
+			rb.useGravity = true;
+		}
+	}
+
 }

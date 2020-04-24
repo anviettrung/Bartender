@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class ScreenLineRenderer : MonoBehaviour {
 
+	public Transform fixedCutPoint;
+
     // Line Drawn event handler
-    public delegate void LineDrawnHandler(Vector3 begin, Vector3 end, Vector3 depth);
+    public delegate void LineDrawnHandler(Vector3 point, Vector3 begin, Vector3 end, Vector3 depth);
     public event LineDrawnHandler OnLineDrawn;
 
     bool dragging;
@@ -36,33 +38,55 @@ public class ScreenLineRenderer : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (!dragging && Input.GetMouseButtonDown(0))
-        {
-            start = cam.ScreenToViewportPoint(Input.mousePosition);
-            dragging = true;
-        }
+		//if (!dragging && Input.GetMouseButtonDown(0))
+		//{
+		//    start = cam.ScreenToViewportPoint(Input.mousePosition);
+		//    dragging = true;
+		//}
 
-        if (dragging)
-        {
-            end = cam.ScreenToViewportPoint(Input.mousePosition);
-        }
+		//if (dragging)
+		//{
+		//    end = cam.ScreenToViewportPoint(Input.mousePosition);
+		//}
 
-        if (dragging && Input.GetMouseButtonUp(0))
-        {
-            // Finished dragging. We draw the line segment
-            end = cam.ScreenToViewportPoint(Input.mousePosition);
-            dragging = false;
+		//if (dragging && Input.GetMouseButtonUp(0))
+		//{
+		//    // Finished dragging. We draw the line segment
+		//    end = cam.ScreenToViewportPoint(Input.mousePosition);
+		//    dragging = false;
 
-            var startRay = cam.ViewportPointToRay(start);
-            var endRay = cam.ViewportPointToRay(end);
+		//    var startRay = cam.ViewportPointToRay(start);
+		//    var endRay = cam.ViewportPointToRay(end);
 
-            // Raise OnLineDrawnEvent
-            OnLineDrawn?.Invoke(
-                startRay.GetPoint(cam.nearClipPlane),
-                endRay.GetPoint(cam.nearClipPlane),
-                endRay.direction.normalized);
-        }
-    }
+		//    // Raise OnLineDrawnEvent
+		//    OnLineDrawn?.Invoke(
+		//        startRay.GetPoint(cam.nearClipPlane),
+		//        endRay.GetPoint(cam.nearClipPlane),
+		//        endRay.direction.normalized);
+		//}
+		if (!dragging && Input.GetMouseButtonDown(0)) {
+			start = Input.mousePosition;
+			dragging = true;
+		}
+
+		if (dragging && Input.GetMouseButtonUp(0)) {
+			// Finished dragging. We draw the line segment
+			end = Input.mousePosition;
+			dragging = false;
+
+			//Vector3 direct = (end - start).normalized;
+
+			var startRay = cam.ViewportPointToRay(cam.ScreenToViewportPoint(start));
+			var endRay = cam.ViewportPointToRay(end);
+
+			// Raise OnLineDrawnEvent
+			OnLineDrawn?.Invoke(
+				fixedCutPoint.position,
+				start,
+				end,
+				Vector3.forward);
+		}
+	}
     
 
     /// <summary>
